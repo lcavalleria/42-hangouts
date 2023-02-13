@@ -10,25 +10,16 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.ft_hangouts.datasource.Contact
 import com.example.ft_hangouts.ui.layout.ContactRow
+import com.example.ft_hangouts.ui.layout.Home
 import com.example.ft_hangouts.ui.theme.FthangoutsTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             FthangoutsTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    LazyColumn(
-                        modifier = Modifier
-                            .fillMaxSize()
-                    ) {
-                        items(Contact.placeholder) { contact ->
-                            ContactRow(contact = contact)
-                        }
-                    }
-                }
+                Home()
             }
         }
     }

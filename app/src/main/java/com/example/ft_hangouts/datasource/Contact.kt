@@ -36,7 +36,175 @@ data class Contact(
                 ImageBitmap(19, 30),
                 true,
                 Instant.now()
-            )
+            ),
+            Contact(
+                "Lluis Cavalleria",
+                "639516183",
+                "jaja@jaja.ja",
+                ImageBitmap(19, 30),
+                true,
+                Instant.now()
+            ),
+            Contact(
+                "Ton Pare",
+                "599999999",
+                "tonpare@ton.pa",
+                ImageBitmap(19, 30),
+                false,
+                Instant.now()
+            ),
+            Contact(
+                "Soviet Elmo",
+                "677777776",
+                "tripaloski@sov.ru",
+                ImageBitmap(19, 30),
+                true,
+                Instant.now()
+            ),
+            Contact(
+                "Lluis Cavalleria",
+                "639516183",
+                "jaja@jaja.ja",
+                ImageBitmap(19, 30),
+                true,
+                Instant.now()
+            ),
+            Contact(
+                "Ton Pare",
+                "599999999",
+                "tonpare@ton.pa",
+                ImageBitmap(19, 30),
+                false,
+                Instant.now()
+            ),
+            Contact(
+                "Soviet Elmo",
+                "677777776",
+                "tripaloski@sov.ru",
+                ImageBitmap(19, 30),
+                true,
+                Instant.now()
+            ),
+            Contact(
+                "Lluis Cavalleria",
+                "639516183",
+                "jaja@jaja.ja",
+                ImageBitmap(19, 30),
+                true,
+                Instant.now()
+            ),
+            Contact(
+                "Ton Pare",
+                "599999999",
+                "tonpare@ton.pa",
+                ImageBitmap(19, 30),
+                false,
+                Instant.now()
+            ),
+            Contact(
+                "Soviet Elmo",
+                "677777776",
+                "tripaloski@sov.ru",
+                ImageBitmap(19, 30),
+                true,
+                Instant.now()
+            ),
+            Contact(
+                "Lluis Cavalleria",
+                "639516183",
+                "jaja@jaja.ja",
+                ImageBitmap(19, 30),
+                true,
+                Instant.now()
+            ),
+            Contact(
+                "Ton Pare",
+                "599999999",
+                "tonpare@ton.pa",
+                ImageBitmap(19, 30),
+                false,
+                Instant.now()
+            ),
+            Contact(
+                "Soviet Elmo",
+                "677777776",
+                "tripaloski@sov.ru",
+                ImageBitmap(19, 30),
+                true,
+                Instant.now()
+            ),
+            Contact(
+                "Lluis Cavalleria",
+                "639516183",
+                "jaja@jaja.ja",
+                ImageBitmap(19, 30),
+                true,
+                Instant.now()
+            ),
+            Contact(
+                "Ton Pare",
+                "599999999",
+                "tonpare@ton.pa",
+                ImageBitmap(19, 30),
+                false,
+                Instant.now()
+            ),
+            Contact(
+                "Soviet Elmo",
+                "677777776",
+                "tripaloski@sov.ru",
+                ImageBitmap(19, 30),
+                true,
+                Instant.now()
+            ),
+            Contact(
+                "Lluis Cavalleria",
+                "639516183",
+                "jaja@jaja.ja",
+                ImageBitmap(19, 30),
+                true,
+                Instant.now()
+            ),
+            Contact(
+                "Ton Pare",
+                "599999999",
+                "tonpare@ton.pa",
+                ImageBitmap(19, 30),
+                false,
+                Instant.now()
+            ),
+            Contact(
+                "Soviet Elmo",
+                "677777776",
+                "tripaloski@sov.ru",
+                ImageBitmap(19, 30),
+                true,
+                Instant.now()
+            ),
+            Contact(
+                "Lluis Cavalleria",
+                "639516183",
+                "jaja@jaja.ja",
+                ImageBitmap(19, 30),
+                true,
+                Instant.now()
+            ),
+            Contact(
+                "Ton Pare",
+                "599999999",
+                "tonpare@ton.pa",
+                ImageBitmap(19, 30),
+                false,
+                Instant.now()
+            ),
+            Contact(
+                "Soviet Elmo",
+                "677777776",
+                "tripaloski@sov.ru",
+                ImageBitmap(19, 30),
+                true,
+                Instant.now()
+            ),
         )
     }
 }
