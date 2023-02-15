@@ -30,6 +30,7 @@ Thumbs.db
 /.idea/navEditor.xml
 /.idea/misc.xml
 /.idea/assetWizardSettings.xml
+/.idea/deploymentTargetDropDown.xml
 /build
 /captures
 .externalNativeBuild

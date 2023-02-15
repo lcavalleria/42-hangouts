@@ -3,18 +3,17 @@ package com.example.ft_hangouts.datasource
 import java.time.Instant
 
 object DateUtils {
-    const val secondsPerMinute = 60
-    const val secondsPerHour = secondsPerMinute * 60
-    const val secondsPerDay = secondsPerHour * 24
-    const val secondsPerWeek = secondsPerDay * 7
-    const val secondsPerMonth =
+    private const val secondsPerMinute = 60
+    private const val secondsPerHour = secondsPerMinute * 60
+    private const val secondsPerDay = secondsPerHour * 24
+    private const val secondsPerWeek = secondsPerDay * 7
+    private const val secondsPerMonth =
         secondsPerDay * 30 // Yes, i know it's bad. Not the objective of the project.
-    const val secondsPerYear = secondsPerMonth * 12
+    private const val secondsPerYear = secondsPerMonth * 12
 
-    fun formatTimeAgo(instant: Instant): String {
+    fun formatTimeAgo(epochMs: Long): String {
         val now = Instant.now()
-        val secondsAgo = now.epochSecond - instant.epochSecond
-
+        val secondsAgo = now.epochSecond - epochMs / 1000
 
         return if (secondsAgo < secondsPerMinute) "Less than 1 minute ago."
         else if (secondsAgo < secondsPerHour) "${secondsAgo * secondsPerMinute} minutes ago."
