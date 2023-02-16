@@ -7,22 +7,10 @@ import java.time.Instant
 import java.util.UUID
 
 object ContactsRepository {
-    fun fetchContacts(): List<Contact> {
-        return placeholder.map { cdo ->
-            return@map Contact(
-                id = UUID.randomUUID().toString(),
-                name = cdo.name,
-                number = cdo.number,
-                mail = cdo.mail,
-                picture = cdo.picture,
-                isFavorite = cdo.isFavorite,
-                lastOnline = cdo.lastOnline.toEpochMilli()
-            )
-        }
-    }
+
 
     // todo
-    private val placeholder = arrayOf(
+    private val contactDaoPlaceholder = arrayOf(
         ContactDao(
             "Lluis Cavalleria",
             "639516183",
@@ -216,4 +204,19 @@ object ContactsRepository {
             Instant.now()
         ),
     )
+
+    private fun fetchContacts(): List<Contact> {
+        return contactDaoPlaceholder.map { cdo ->
+            return@map Contact(
+                id = UUID.randomUUID().toString(),
+                name = cdo.name,
+                number = cdo.number,
+                mail = cdo.mail,
+                picture = cdo.picture,
+                isFavorite = cdo.isFavorite,
+                lastOnline = cdo.lastOnline.toEpochMilli()
+            )
+        }
+    }
+    val placeholder = fetchContacts()
 }

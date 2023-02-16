@@ -3,7 +3,6 @@ package com.example.ft_hangouts.viewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.StateFlow
-import java.time.Instant
 import java.util.*
 
 class MainViewModel(
@@ -13,11 +12,7 @@ class MainViewModel(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    val contactsState: StateFlow<Map<String, Contact>> =
-        savedStateHandle.getStateFlow("contacts", emptyMap())
-    val timeSetToBackgroundState: StateFlow<Instant> =
-        savedStateHandle.getStateFlow("backgroundTimeMs", Instant.now())
-    val editingContactState: StateFlow<Contact?> =
+    val selectedContactState: StateFlow<Contact?> =
         savedStateHandle.getStateFlow("editingContact", null)
 
     /**
@@ -29,20 +24,26 @@ class MainViewModel(
     }
 
     /**
-     * to load all the contacts at once
-     */
-    fun loadContacts(contacts: List<Contact>) {
-        savedStateHandle["contacts"] = contacts.associateBy { c -> c.id }
-    }
-
-    /**
      * keeps the contact that will be / is being edited in the Edit screen.
      */
     fun setEditContact(contact: Contact) {
         savedStateHandle["editingContact"] = contact
     }
 
-    fun saveBackgroundTime() {
-        savedStateHandle["backgroundTimeMs"] = Instant.now()
+    fun setEditContactName(name: String) {
+        savedStateHandle["editingContact"] = selectedContactState.value?.copy(name = name)
     }
+
+    fun setEditContactNumber(num: String) {
+        savedStateHandle["editingContact"] = selectedContactState.value?.copy(number = num)
+    }
+
+    fun setEditContactMail(mail: String) {
+        savedStateHandle["editingContact"] = selectedContactState.value?.copy(mail = mail)
+    }
+
+    fun setEditContactIsFav(fav: Boolean) {
+        savedStateHandle["editingContact"] = selectedContactState.value?.copy(isFavorite = fav)
+    }
+
 }

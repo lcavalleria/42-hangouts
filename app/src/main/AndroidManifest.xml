@@ -2,11 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
-        android:allowBackup="true"
         android:icon="@drawable/ft_logo"
         android:label="Ft Hangouts"
-        android:supportsRtl="true"
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
