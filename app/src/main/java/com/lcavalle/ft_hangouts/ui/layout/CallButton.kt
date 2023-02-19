@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.lcavalle.ft_hangouts.viewModel.Contact
+import com.lcavalle.ft_hangouts.Contact
 
 @Composable
 fun CallButton(contact: Contact, context: Context) {

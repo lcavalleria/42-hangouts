@@ -3,11 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
 
     <application
-        android:theme="@style/Theme.Fthangouts"
+        android:name="com.lcavalle.ft_hangouts.FtHangoutsApplication"
         android:icon="@drawable/ft_logo"
         android:label="Ft Hangouts"
+        android:theme="@style/Theme.Fthangouts"
         tools:targetApi="31">
         <activity
             android:name="com.lcavalle.ft_hangouts.MainActivity"

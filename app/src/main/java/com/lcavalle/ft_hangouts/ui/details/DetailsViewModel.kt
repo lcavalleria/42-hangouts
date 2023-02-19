@@ -1,13 +1,21 @@
 package com.lcavalle.ft_hangouts.ui.details
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.lcavalle.ft_hangouts.Contact
 import com.lcavalle.ft_hangouts.repository.ContactsRepository
-import com.lcavalle.ft_hangouts.viewModel.Contact
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
-class DetailsViewModel : ViewModel() {
-    fun getContactById(id: String): StateFlow<Contact> {
-        return MutableStateFlow(ContactsRepository.contactsPlaceholder.first { it.id == id })
+class DetailsViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
+    private val contactStateName = "selectedContact"
+    val selectedContactState =
+        savedStateHandle.getStateFlow(contactStateName, Contact.empty())
+
+    fun selectContactById(id: Long) {
+        viewModelScope.launch {
+            savedStateHandle[contactStateName] =
+                ContactsRepository.findContactById(id) ?: Contact.empty()
+        }
     }
 }

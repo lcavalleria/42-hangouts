@@ -2,30 +2,51 @@ package com.lcavalle.ft_hangouts.ui.chat
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.lcavalle.ft_hangouts.Contact
+import com.lcavalle.ft_hangouts.datasource.sms.SmsMessageDto
 import com.lcavalle.ft_hangouts.repository.ContactsRepository
-import com.lcavalle.ft_hangouts.viewModel.Contact
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.lcavalle.ft_hangouts.repository.SmsMessagesRepository
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 class ChatViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
-    private val currentMessageContent: StateFlow<String> =
-        savedStateHandle.getStateFlow("currentMessageContent", "")
+    private val currentMessageStateName = "currentMessageContent"
+    private val contactStateName = "selectedContact"
 
-    fun getContactById(id: String): StateFlow<Contact> {
-        return MutableStateFlow(ContactsRepository.contactsPlaceholder.first { it.id == id })
+    private val currentMessageContent: StateFlow<String> =
+        savedStateHandle.getStateFlow(currentMessageStateName, "")
+
+    val selectedContact: StateFlow<Contact> =
+        savedStateHandle.getStateFlow(contactStateName, Contact.empty())
+
+    fun selectContactById(id: Long) {
+        viewModelScope.launch {
+            savedStateHandle[contactStateName] = ContactsRepository.findContactById(id)
+        }
     }
 
     fun getCurrentMessage(): StateFlow<String> {
         return currentMessageContent
     }
 
-    fun getMessageHistoryById(id: String): StateFlow<Map<Long, Pair<Boolean, String>>> {
-        // <Timestamp, Pair<isMine,Message>>
-        return MutableStateFlow(ContactsRepository.messagesPlaceholderById(id))
+    /**
+     * Returns all sms of that contact (both sent and received), ordered by timestamp.
+     */
+    fun getMessageHistoryById(contactId: Long): StateFlow<List<SmsMessageDto>> {
+        return SmsMessagesRepository.allSmsMessages
+            .map { messages ->
+                messages.filter { it.contactId == contactId }
+                    .sortedBy { it.timestamp }
+            }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+
     }
 
     fun setCurrentMessage(message: String) {
-        savedStateHandle["currentMessageContent"] = message
+        savedStateHandle[currentMessageStateName] = message
     }
 
 

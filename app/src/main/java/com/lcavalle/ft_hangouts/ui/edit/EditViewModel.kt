@@ -2,39 +2,50 @@ package com.lcavalle.ft_hangouts.ui.edit
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.lcavalle.ft_hangouts.Contact
 import com.lcavalle.ft_hangouts.repository.ContactsRepository
-import com.lcavalle.ft_hangouts.viewModel.Contact
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 class EditViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
-    private val selectedContactState: StateFlow<Contact?> =
-        savedStateHandle.getStateFlow("editingContact", null)
+    private val contactStateName = "editingContact"
+    val selectedContactState: StateFlow<Contact> =
+        savedStateHandle.getStateFlow(contactStateName, Contact.empty())
 
-    fun getContactById(id: String): StateFlow<Contact> {
-        return MutableStateFlow(ContactsRepository.contactsPlaceholder.first { it.id == id })
-    }
-
-    /**
-     * keeps the contact that will be / is being edited in the Edit screen.
-     */
-    fun setEditContact(contact: Contact) {
-        savedStateHandle["editingContact"] = contact
+    fun selectContactById(id: Long) {
+        viewModelScope.launch {
+            savedStateHandle[contactStateName] =
+                ContactsRepository.findContactById(id) ?: Contact.empty()
+        }
     }
 
     fun setEditContactName(name: String) {
-        savedStateHandle["editingContact"] = selectedContactState.value?.copy(name = name)
+        savedStateHandle[contactStateName] = selectedContactState.value.copy(name = name)
+        val res: Contact? = savedStateHandle[contactStateName]
     }
 
     fun setEditContactNumber(num: String) {
-        savedStateHandle["editingContact"] = selectedContactState.value?.copy(number = num)
+        savedStateHandle[contactStateName] = selectedContactState.value.copy(number = num)
     }
 
     fun setEditContactMail(mail: String) {
-        savedStateHandle["editingContact"] = selectedContactState.value?.copy(mail = mail)
+        savedStateHandle[contactStateName] = selectedContactState.value.copy(mail = mail)
     }
 
     fun setEditContactIsFav(fav: Boolean) {
-        savedStateHandle["editingContact"] = selectedContactState.value?.copy(isFavorite = fav)
+        savedStateHandle[contactStateName] = selectedContactState.value.copy(isFavorite = fav)
+    }
+
+    fun storeEditingContact() {
+        viewModelScope.launch {
+            ContactsRepository.storeContact(selectedContactState.value)
+        }
+    }
+
+    fun deleteContact() {
+        viewModelScope.launch {
+            ContactsRepository.deleteContact(selectedContactState.value)
+        }
     }
 }

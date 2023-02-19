@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import com.lcavalle.ft_hangouts.viewModel.Contact
+import com.lcavalle.ft_hangouts.Contact
 
 @Composable
 fun ContactImgFav(

@@ -8,6 +8,10 @@ sealed interface Router {
         const val route = "home"
     }
 
+    object Settings : Router {
+        const val route = "settings"
+    }
+
     object Details : Router {
         const val route = "details"
         const val argId = "id"
@@ -16,7 +20,7 @@ sealed interface Router {
             return "$route/{$argId}"
         }
 
-        fun withId(id: String): String {
+        fun withId(id: Long): String {
             return "$route/${id}"
         }
     }
@@ -29,7 +33,7 @@ sealed interface Router {
             return "$route/{$argId}"
         }
 
-        fun withId(id: String): String {
+        fun withId(id: Long): String {
             return "$route/${id}"
         }
     }
@@ -42,7 +46,7 @@ sealed interface Router {
             return "$route/{$argId}"
         }
 
-        fun withId(id: String): String {
+        fun withId(id: Long): String {
             return "$route/${id}"
         }
     }

@@ -2,28 +2,27 @@ package com.lcavalle.ft_hangouts.ui.home
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.lcavalle.ft_hangouts.viewModel.Contact
+import androidx.lifecycle.viewModelScope
+import com.lcavalle.ft_hangouts.Contact
+import com.lcavalle.ft_hangouts.repository.ContactsRepository
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 
 class HomeViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
 
+    private val pauseTimeName = "pausedTimeMs"
     val contactsState: StateFlow<List<Contact>> =
-        savedStateHandle.getStateFlow("contacts", emptyList())
+        ContactsRepository.allContacts.map { contactsList ->
+            contactsList.map { Contact.fromDto(it) }.sortedBy { !it.isFavorite }
+        }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     val timeSetToBackgroundState: StateFlow<Long> =
-        savedStateHandle.getStateFlow("backgroundTimeMs", 0)
+        savedStateHandle.getStateFlow(pauseTimeName, 0)
 
-    /**
-     * to load all the contacts at once
-     */
-    fun loadContacts(contacts: List<Contact>) {
-        savedStateHandle["contacts"] = contacts
-    }
 
-    /**
-     *
-     */
     fun saveBackgroundTime() {
-        savedStateHandle["backgroundTimeMs"] = System.currentTimeMillis()
+        savedStateHandle[pauseTimeName] = System.currentTimeMillis()
     }
 }
