@@ -1,33 +1,34 @@
-package com.lcavalle.ft_hangouts.ui.layout
+package com.lcavalle.ft_hangouts.ui.home
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Settings
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import android.app.Activity
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.navigation.NavController
 import com.example.ft_hangouts.R
-import com.lcavalle.ft_hangouts.Router
+import kotlin.random.Random
 
 
 @Composable
-fun HomeTopBar(navController: NavController) {
-    FtHangoutsTopBar(
-        left = {},
-        center = {
+fun HomeTopBar() {
+    val activity = LocalView.current.context as Activity
+
+    CenterAlignedTopAppBar(
+        title = {
             Text(
                 text = stringResource(id = R.string.app_name),
                 textAlign = TextAlign.Center,
             )
         },
-        right = {
-            IconButton(
-                onClick = { navController.navigate(Router.Settings.route) }
-            ) {
-                Icon(Icons.Rounded.Settings, "Settings")
+        actions = {
+            SettingsDropdownMenu {
+                val randomColor = Color(Random.nextFloat(), Random.nextFloat(), Random.nextFloat())
+                activity.window.statusBarColor = randomColor.toArgb()
+                activity.window.navigationBarColor = randomColor.toArgb()
             }
         }
     )

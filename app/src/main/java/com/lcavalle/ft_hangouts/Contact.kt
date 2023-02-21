@@ -1,12 +1,7 @@
 package com.lcavalle.ft_hangouts
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Parcel
 import android.os.Parcelable
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asAndroidBitmap
-import androidx.compose.ui.graphics.asImageBitmap
 import com.lcavalle.ft_hangouts.datasource.contact.ContactDto
 
 data class Contact(
@@ -14,8 +9,7 @@ data class Contact(
     val name: String,
     val number: String,
     val mail: String,
-    val pictureUrl: String,
-    val picture: ImageBitmap,
+    val pictureUri: String,
     val isFavorite: Boolean,
     val lastSmsReceiveTimeMs: Long // epoch in ms
 ) : Parcelable {
@@ -25,7 +19,6 @@ data class Contact(
         parcel.readString() ?: "null",
         parcel.readString() ?: "null",
         parcel.readString() ?: "null",
-        Bitmap.CREATOR.createFromParcel(parcel).asImageBitmap(),
         parcel.readByte() != 0.toByte(),
         parcel.readLong()
     )
@@ -35,8 +28,7 @@ data class Contact(
         parcel.writeString(name)
         parcel.writeString(number)
         parcel.writeString(mail)
-        parcel.writeString(pictureUrl)
-        picture.asAndroidBitmap().writeToParcel(parcel, flags)
+        parcel.writeString(pictureUri)
         parcel.writeByte(if (isFavorite) 1 else 0)
         parcel.writeLong(lastSmsReceiveTimeMs)
     }
@@ -44,6 +36,7 @@ data class Contact(
     override fun describeContents(): Int {
         return 0
     }
+
 
     companion object {
         fun fromDto(dto: ContactDto): Contact {
@@ -53,15 +46,20 @@ data class Contact(
                 dto.number,
                 dto.mail,
                 dto.picture,
-                openImage(dto.picture),
                 dto.isFavorite,
                 dto.lastSmsReceiveTimeMs
             )
         }
 
-        private fun openImage(path: String): ImageBitmap {
-            return BitmapFactory.decodeFile(path)?.asImageBitmap() ?: ImageBitmap(50, 50)
-        }
+        fun empty() = Contact(
+            id = 0, // auto assigned by room, so this is irrelevant.
+            name = "",
+            number = "",
+            mail = "",
+            pictureUri = "",
+            isFavorite = false,
+            lastSmsReceiveTimeMs = System.currentTimeMillis()
+        )
 
         @JvmField
         val CREATOR: Parcelable.Creator<Contact> = object : Parcelable.Creator<Contact> {
@@ -73,16 +71,5 @@ data class Contact(
                 return arrayOfNulls(size)
             }
         }
-
-        fun empty() = Contact(
-            id = 0, // auto assigned by room, so this is irrelevant.
-            name = "",
-            number = "",
-            mail = "",
-            pictureUrl = "",
-            picture = ImageBitmap(19, 30),
-            isFavorite = false,
-            lastSmsReceiveTimeMs = 0
-        )
     }
 }

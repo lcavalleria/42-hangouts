@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ft Hangouts</string>
+    <string name="edit_contact">Editar contacto</string>
+    <string name="delete_contact">Eliminar contacto</string>
+    <string name="delete_contact_dialog_title">Eliminar contacto?</string>
+    <string name="yes">Si</string>
+    <string name="no">No</string>
+    <string name="contact_details">Detalles</string>
+    <string name="change_header_color">Cambiar color de cabecera</string>
+    <string name="less_1_min">Hace menos de un minuto.</string>
+    <string name="x_minutes_ago">Hace %1$s minutos.</string>
+    <string name="x_hours_ago">Hace %1$s horas.</string>
+</resources>

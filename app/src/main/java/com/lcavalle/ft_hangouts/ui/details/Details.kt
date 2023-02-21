@@ -1,15 +1,19 @@
 package com.lcavalle.ft_hangouts.ui.details
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -17,7 +21,11 @@ import androidx.navigation.NavController
 import com.example.ft_hangouts.R
 import com.lcavalle.ft_hangouts.Contact
 import com.lcavalle.ft_hangouts.Router
-import com.lcavalle.ft_hangouts.ui.layout.*
+import com.lcavalle.ft_hangouts.ui.ProfileImageLoader
+import com.lcavalle.ft_hangouts.ui.layout.CallButton
+import com.lcavalle.ft_hangouts.ui.layout.EditButton
+import com.lcavalle.ft_hangouts.ui.layout.MessageButton
+import com.lcavalle.ft_hangouts.ui.layout.ProfilePic
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
@@ -26,42 +34,91 @@ fun Details(
     id: Long,
     viewModel: DetailsViewModel = viewModel(),
 ) {
-    viewModel.selectContactById(id)
+    val context = LocalContext.current
+    LaunchedEffect(Unit) {
+        viewModel.selectContactById(id)
+    }
     val contactState = viewModel.selectedContactState.collectAsState()
     val contact: Contact = contactState.value
+    val bitmap = ProfileImageLoader.loadInternal(context, id)
     Scaffold(
         topBar = {
-            FtHangoutsTopBar(
-                left = {
+            CenterAlignedTopAppBar(
+                navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.Rounded.ArrowBack, "Back")
                     }
                 },
-                center = { Text(stringResource(id = R.string.contact_details)) },
-                right = {}
-            )
+                title = { Text(stringResource(id = R.string.contact_details)) },
+
+                )
         },
         content = { padding ->
-            Column(
-                modifier = Modifier
-                    .padding(padding)
-                    .fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                val context = LocalContext.current
-                ProfilePic(contact = contact, size = DpSize(width = 160.dp, 160.dp))
-                Row(horizontalArrangement = Arrangement.Center) {
-                    CallButton(contact = contact, context = context)
-                    MessageButton(contact = contact, onClick = {
-                        navController.navigate(Router.Chat.withId(contact.id))
-                    })
-                    EditButton {
-                        navController.navigate(Router.Edit.withId(id))
+            Column(modifier = Modifier.fillMaxSize()) {
+
+                Column(
+                    modifier = Modifier
+                        .padding(padding)
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
+                        .weight(weight = 1f, fill = false),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    val detailsFieldModifier = Modifier
+                        .padding(horizontal = 32.dp, vertical = 16.dp)
+                        .fillMaxWidth()
+                    Box(
+                        modifier = Modifier
+                            .padding(32.dp)
+                            .fillMaxWidth(), contentAlignment = Alignment.Center
+                    ) {
+                        ProfilePic(
+                            contact = contact,
+                            modifier = Modifier.align(Alignment.TopCenter),
+                            bitmap = bitmap,
+                            size = DpSize(120.dp, 120.dp),
+                        )
                     }
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = detailsFieldModifier
+                    ) {
+                        CallButton(
+                            contact = contact,
+                            context = context,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f)
+                        )
+                        MessageButton(modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f), onClick = {
+                            navController.navigate(Router.Chat.withId(contact.id))
+                        })
+                        EditButton(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f)
+                        ) {
+                            navController.navigate(Router.Edit.withId(id))
+                        }
+                    }
+                    Text(
+                        text = contact.name,
+                        modifier = detailsFieldModifier,
+                        textAlign = TextAlign.Center
+                    )
+                    Text(
+                        text = contact.number,
+                        modifier = detailsFieldModifier,
+                        textAlign = TextAlign.Center
+                    )
+                    Text(
+                        text = contact.mail,
+                        modifier = detailsFieldModifier,
+                        textAlign = TextAlign.Center
+                    )
                 }
-                Text(text = contact.name)
-                Text(text = contact.number)
-                Text(text = contact.mail)
             }
         }
     )

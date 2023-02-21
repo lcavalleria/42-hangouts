@@ -8,10 +8,6 @@ sealed interface Router {
         const val route = "home"
     }
 
-    object Settings : Router {
-        const val route = "settings"
-    }
-
     object Details : Router {
         const val route = "details"
         const val argId = "id"

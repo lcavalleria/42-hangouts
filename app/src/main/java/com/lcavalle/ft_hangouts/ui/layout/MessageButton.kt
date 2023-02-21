@@ -1,6 +1,7 @@
 package com.lcavalle.ft_hangouts.ui.layout
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,13 +16,13 @@ import androidx.compose.ui.unit.dp
 import com.lcavalle.ft_hangouts.Contact
 
 @Composable
-fun MessageButton(contact: Contact, onClick: () -> Unit) {
+fun MessageButton(onClick: () -> Unit,modifier: Modifier = Modifier) {
     IconButton(
         onClick = onClick,
-        Modifier
+        modifier
             .padding(horizontal = 8.dp)
             .background(Color.Gray, RoundedCornerShape(16.dp))
-            .size(width = 112.dp, height = 80.dp)
+            .height(80.dp)
     ) {
         Icon(Icons.Rounded.Chat, modifier = Modifier.size(40.dp), contentDescription = "Message")
     }

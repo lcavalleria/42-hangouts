@@ -1,10 +1,12 @@
 package com.lcavalle.ft_hangouts.ui.edit
 
+import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lcavalle.ft_hangouts.Contact
 import com.lcavalle.ft_hangouts.repository.ContactsRepository
+import com.lcavalle.ft_hangouts.ui.ProfileImageLoader
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
@@ -22,7 +24,6 @@ class EditViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel(
 
     fun setEditContactName(name: String) {
         savedStateHandle[contactStateName] = selectedContactState.value.copy(name = name)
-        val res: Contact? = savedStateHandle[contactStateName]
     }
 
     fun setEditContactNumber(num: String) {
@@ -31,6 +32,10 @@ class EditViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel(
 
     fun setEditContactMail(mail: String) {
         savedStateHandle[contactStateName] = selectedContactState.value.copy(mail = mail)
+    }
+
+    fun setEditContactPicture(uri: String) {
+        savedStateHandle[contactStateName] = selectedContactState.value.copy(pictureUri = uri)
     }
 
     fun setEditContactIsFav(fav: Boolean) {
@@ -43,9 +48,10 @@ class EditViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel(
         }
     }
 
-    fun deleteContact() {
+    fun deleteContact(context: Context) {
         viewModelScope.launch {
             ContactsRepository.deleteContact(selectedContactState.value)
+            ProfileImageLoader.deleteInternal(context, selectedContactState.value.id)
         }
     }
 }

@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,7 +24,7 @@ import androidx.core.content.ContextCompat
 import com.lcavalle.ft_hangouts.Contact
 
 @Composable
-fun CallButton(contact: Contact, context: Context) {
+fun CallButton(contact: Contact, context: Context, modifier: Modifier = Modifier) {
     val activity = context as Activity
     IconButton(
         onClick = {
@@ -48,10 +49,10 @@ fun CallButton(contact: Contact, context: Context) {
                 ).show()
             }
         },
-        Modifier
+        modifier
             .padding(horizontal = 8.dp)
             .background(Color.Gray, RoundedCornerShape(16.dp))
-            .size(width = 112.dp, height = 80.dp)
+            .height(height = 80.dp)
     ) {
         Icon(Icons.Rounded.Call, modifier = Modifier.size(40.dp), contentDescription = "Call")
     }

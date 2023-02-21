@@ -12,6 +12,9 @@ interface ContactDao {
     @Query("SELECT * FROM ${DbStrings.TableName} WHERE ${DbStrings.Fields.Id} = :id")
     suspend fun findContactById(id: Long): ContactDto?
 
+    @Query("SELECT * FROM ${DbStrings.TableName} WHERE ${DbStrings.Fields.Number} = :number")
+    suspend fun findContactByNumber(number: String): ContactDto?
+
     @Query("SELECT * FROM ${DbStrings.TableName}")
     fun getAllContacts(): Flow<List<ContactDto>>
 
