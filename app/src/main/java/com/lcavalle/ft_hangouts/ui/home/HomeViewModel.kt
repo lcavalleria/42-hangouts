@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
 class HomeViewModel() : ViewModel() {
+
     val contactsState: StateFlow<List<Contact>> =
         ContactsRepository.allContacts.map { contactsList ->
             contactsList.map { Contact.fromDto(it) }.sortedBy { !it.isFavorite }

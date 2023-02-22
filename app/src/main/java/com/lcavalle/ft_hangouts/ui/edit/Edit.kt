@@ -119,21 +119,36 @@ fun Edit(
                 TextField(
                     value = contact.name,
                     maxLines = 1,
-                    placeholder = { Text("Name") },
+                    placeholder = {
+                        Text(
+                            stringResource(id = R.string.name_placeholder),
+                            color = Color.Gray
+                        )
+                    },
                     onValueChange = { viewModel.setEditContactName(it) },
                     modifier = editFieldModifier
                 )
                 TextField(
                     value = contact.number,
                     maxLines = 1,
-                    placeholder = { Text("Number") },
+                    placeholder = {
+                        Text(
+                            stringResource(id = R.string.number_placeholder),
+                            color = Color.Gray
+                        )
+                    },
                     onValueChange = { viewModel.setEditContactNumber(it) },
                     modifier = editFieldModifier
                 )
                 TextField(
                     value = contact.mail,
                     maxLines = 1,
-                    placeholder = { Text("Mail") },
+                    placeholder = {
+                        Text(
+                            stringResource(id = R.string.mail_placeholder),
+                            color = Color.Gray
+                        )
+                    },
                     onValueChange = { viewModel.setEditContactMail(it) },
                     modifier = editFieldModifier
                 )
@@ -143,7 +158,10 @@ fun Edit(
                     text = stringResource(id = R.string.delete_contact),
                     textAlign = TextAlign.Center,
                     modifier = editFieldModifier
-                        .background(Color.Gray, shape = RoundedCornerShape(16.dp))
+                        .background(
+                            MaterialTheme.colorScheme.surfaceVariant,
+                            shape = RoundedCornerShape(16.dp)
+                        )
                         .clickable { openDeleteDialog.value = true }
                         .padding(16.dp),
                     color = Color.Red

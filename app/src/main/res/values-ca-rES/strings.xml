@@ -11,4 +11,7 @@
     <string name="less_1_min">Fa menys d\'un minut</string>
     <string name="x_minutes_ago">Fa %1$s minuts.</string>
     <string name="x_hours_ago">Fa %1$s hores.</string>
+    <string name="name_placeholder">Nom</string>
+    <string name="number_placeholder">+34</string>
+    <string name="mail_placeholder">Mail</string>
 </resources>

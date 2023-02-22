@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,7 +23,7 @@ fun EditButton(modifier: Modifier = Modifier, onEditClick: () -> Unit) {
         },
         modifier
             .padding(horizontal = 8.dp)
-            .background(Color.Gray, RoundedCornerShape(16.dp))
+            .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(16.dp))
             .height(80.dp)
     ) {
         Icon(Icons.Rounded.Edit, modifier = Modifier.size(40.dp), contentDescription = "Edit")

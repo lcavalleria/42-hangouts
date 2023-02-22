@@ -1,11 +1,14 @@
 package com.lcavalle.ft_hangouts
 
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.material3.Surface
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -28,6 +31,7 @@ class MainActivity() : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        getPermissions()
 
         setContent {
             val navController = rememberNavController()
@@ -99,16 +103,46 @@ class MainActivity() : ComponentActivity() {
         super.onResume()
 
         val pausedTime = viewModel.pauseTimeState.value
-        if (pausedTime > 0 && viewModel.isHomeScreenState.value)
-            Toast.makeText(
-                this.applicationContext,
-                "The app was paused at ${
-                    DateUtils.formatDate(
-                        pausedTime,
-                        resources.configuration
-                    )
-                }",
-                Toast.LENGTH_LONG
-            ).show()
+        if (pausedTime > 0 && viewModel.isHomeScreenState.value) Toast.makeText(
+            this.applicationContext, "The app was paused at ${
+                DateUtils.formatDate(
+                    pausedTime, resources.configuration
+                )
+            }", Toast.LENGTH_LONG
+        ).show()
+    }
+
+    private fun getPermissions() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.SEND_SMS
+            ) != PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.RECEIVE_SMS
+            ) != PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.BROADCAST_SMS
+            ) != PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.READ_SMS
+            ) != PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.CALL_PHONE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this, arrayOf(
+                    android.Manifest.permission.SEND_SMS,
+                    android.Manifest.permission.RECEIVE_SMS,
+                    android.Manifest.permission.BROADCAST_SMS,
+                    android.Manifest.permission.READ_SMS,
+                    android.Manifest.permission.CALL_PHONE,
+                ), 0
+            )
+        }
     }
 }

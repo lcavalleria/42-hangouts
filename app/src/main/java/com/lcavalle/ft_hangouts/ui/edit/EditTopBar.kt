@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.example.ft_hangouts.R
 import com.lcavalle.ft_hangouts.ui.layout.FavIndicator
+import com.lcavalle.ft_hangouts.ui.layout.colorsFromStatusBar
 
 @Composable
 fun EditTopBar(
@@ -23,6 +24,7 @@ fun EditTopBar(
     onDoneClick: () -> Unit
 ) {
     CenterAlignedTopAppBar(
+        colors = colorsFromStatusBar(),
         navigationIcon = {
             IconButton(onClick = onNavigationIcon) {
                 Icon(Icons.Rounded.ArrowBack, "Back")

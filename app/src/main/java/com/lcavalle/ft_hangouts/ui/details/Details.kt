@@ -13,19 +13,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.ft_hangouts.R
 import com.lcavalle.ft_hangouts.Contact
 import com.lcavalle.ft_hangouts.Router
 import com.lcavalle.ft_hangouts.ui.ProfileImageLoader
-import com.lcavalle.ft_hangouts.ui.layout.CallButton
-import com.lcavalle.ft_hangouts.ui.layout.EditButton
-import com.lcavalle.ft_hangouts.ui.layout.MessageButton
-import com.lcavalle.ft_hangouts.ui.layout.ProfilePic
+import com.lcavalle.ft_hangouts.ui.layout.*
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
@@ -44,6 +43,7 @@ fun Details(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
+                colors = colorsFromStatusBar(),
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.Rounded.ArrowBack, "Back")
@@ -55,7 +55,6 @@ fun Details(
         },
         content = { padding ->
             Column(modifier = Modifier.fillMaxSize()) {
-
                 Column(
                     modifier = Modifier
                         .padding(padding)
@@ -65,7 +64,7 @@ fun Details(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     val detailsFieldModifier = Modifier
-                        .padding(horizontal = 32.dp, vertical = 16.dp)
+                        .padding(horizontal = 32.dp, vertical = 32.dp)
                         .fillMaxWidth()
                     Box(
                         modifier = Modifier
@@ -79,6 +78,14 @@ fun Details(
                             size = DpSize(120.dp, 120.dp),
                         )
                     }
+                    Text(
+                        text = contact.name,
+                        fontSize = 40.sp,
+                        lineHeight = 45.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = detailsFieldModifier,
+                        textAlign = TextAlign.Center
+                    )
                     Row(
                         horizontalArrangement = Arrangement.Center,
                         modifier = detailsFieldModifier
@@ -104,17 +111,15 @@ fun Details(
                         }
                     }
                     Text(
-                        text = contact.name,
-                        modifier = detailsFieldModifier,
-                        textAlign = TextAlign.Center
-                    )
-                    Text(
                         text = contact.number,
+                        fontSize = 32.sp,
+                        fontWeight = FontWeight.Bold,
                         modifier = detailsFieldModifier,
                         textAlign = TextAlign.Center
                     )
                     Text(
                         text = contact.mail,
+                        fontSize = 24.sp,
                         modifier = detailsFieldModifier,
                         textAlign = TextAlign.Center
                     )

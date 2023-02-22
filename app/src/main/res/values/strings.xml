@@ -10,5 +10,8 @@
     <string name="less_1_min">Less than one minute ago.</string>
     <string name="x_minutes_ago">%1$s minutes ago.</string>
     <string name="x_hours_ago">%1$s hours ago.</string>
+    <string name="name_placeholder">Name</string>
+    <string name="number_placeholder">+33</string>
+    <string name="mail_placeholder">Mail</string>
 
 </resources>

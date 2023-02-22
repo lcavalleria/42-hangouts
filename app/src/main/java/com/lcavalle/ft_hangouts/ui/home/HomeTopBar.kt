@@ -9,15 +9,21 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ft_hangouts.R
+import com.lcavalle.ft_hangouts.MainViewModel
+import com.lcavalle.ft_hangouts.ui.layout.colorsFromStatusBar
 import kotlin.random.Random
 
 
 @Composable
-fun HomeTopBar() {
+fun HomeTopBar(
+    viewModel: MainViewModel = viewModel()
+) {
     val activity = LocalView.current.context as Activity
 
     CenterAlignedTopAppBar(
+        colors = colorsFromStatusBar(),
         title = {
             Text(
                 text = stringResource(id = R.string.app_name),
@@ -27,6 +33,7 @@ fun HomeTopBar() {
         actions = {
             SettingsDropdownMenu {
                 val randomColor = Color(Random.nextFloat(), Random.nextFloat(), Random.nextFloat())
+                viewModel.setStatusBarColor(randomColor)
                 activity.window.statusBarColor = randomColor.toArgb()
                 activity.window.navigationBarColor = randomColor.toArgb()
             }

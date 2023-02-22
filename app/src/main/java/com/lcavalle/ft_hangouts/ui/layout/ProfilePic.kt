@@ -3,6 +3,7 @@ package com.lcavalle.ft_hangouts.ui.layout
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -13,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
@@ -35,6 +37,7 @@ fun ProfilePic(
             .clip(shape = Shapes.Full),
         contentAlignment = Alignment.Center
     ) {
+        val isDarkTheme: Boolean = isSystemInDarkTheme()
         if (bitmap != null)
             Image(
                 bitmap = bitmap,
@@ -46,9 +49,10 @@ fun ProfilePic(
             )
         else
             Text(
-                text = contact.name.getOrElse(0) { '_' }.toString(),
-                fontSize = size.height.value.sp * 0.7f,
+                text = contact.name.getOrElse(0) { '#' }.toString(),
+                fontSize = size.height.value.sp * 0.65f,
                 textAlign = TextAlign.Center,
+                color = if (isDarkTheme) Color.Black else Color.White,
                 modifier = Modifier
                     .fillMaxSize()
                     .clickable(enabled = onClick != null) { onClick?.invoke() }

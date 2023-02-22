@@ -7,18 +7,12 @@ import android.content.Intent
 import android.os.Build
 import android.provider.Telephony
 import android.util.Log
+import com.lcavalle.ft_hangouts.ReceiverUtils.goAsync
 import com.lcavalle.ft_hangouts.datasource.sms.SmsMessageDto
 import com.lcavalle.ft_hangouts.repository.ContactsRepository
 import com.lcavalle.ft_hangouts.repository.SmsMessagesRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.EmptyCoroutineContext
 
 class FthSmsReceiver() : BroadcastReceiver() {
-
-
     @TargetApi(Build.VERSION_CODES.R)
     @Override
     override fun onReceive(context: Context?, intent: Intent?) = goAsync {
@@ -68,27 +62,8 @@ class FthSmsReceiver() : BroadcastReceiver() {
         }
     }
 
-    /**
-     * some magic i found in stackoverflow. Just to be able to call suspend functions,
-     * since we don't have a scope to use here.
-     */
-    private fun BroadcastReceiver.goAsync(
-        crContext: CoroutineContext = EmptyCoroutineContext,
-        block: suspend CoroutineScope.() -> Unit
-    ) {
-        val pendingResult = goAsync()
-        CoroutineScope(SupervisorJob()).launch(crContext) {
-            try {
-                block()
-            } finally {
-                pendingResult.finish()
-            }
-        }
-    }
 
     companion object {
-        const val Tag = "FtHSmsReceiver"
-
-        const val IntentSent: String = "com.lcavalle.ft_hangouts.SMS_SENT"
+        const val Tag = "FthSmsReceiver"
     }
 }

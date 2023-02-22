@@ -30,9 +30,7 @@
             android:permission="android.permission.BROADCAST_SMS">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-                <action android:name="com.lcavalle.ft_hangouts.SMS_SENT" />
             </intent-filter>
         </receiver>
     </application>
-
 </manifest>

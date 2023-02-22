@@ -11,4 +11,7 @@
     <string name="less_1_min">Hace menos de un minuto.</string>
     <string name="x_minutes_ago">Hace %1$s minutos.</string>
     <string name="x_hours_ago">Hace %1$s horas.</string>
+    <string name="name_placeholder">Nombre</string>
+    <string name="number_placeholder">+34</string>
+    <string name="mail_placeholder">Mail</string>
 </resources>

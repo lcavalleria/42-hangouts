@@ -34,13 +34,14 @@ class ChatViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel(
     }
 
     /**
-     * Returns all sms of that contact (both sent and received), ordered by timestamp.
+     * Returns all sms of that contact (both sent and received).
+     * Sorted by timestamp DESCENDING, to be used with reverseLayout=true in LazyColumn
      */
     fun getMessageHistoryById(contactId: Long): StateFlow<List<SmsMessageDto>> {
         return SmsMessagesRepository.allSmsMessages
             .map { messages ->
                 messages.filter { it.contactId == contactId }
-                    .sortedBy { it.timestamp }
+                    .sortedByDescending { it.timestamp }
             }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     }
@@ -49,5 +50,10 @@ class ChatViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel(
         savedStateHandle[currentMessageStateName] = message
     }
 
+    fun storeMessage(message: SmsMessageDto) {
+        viewModelScope.launch {
+            SmsMessagesRepository.saveSmsMessage(message)
+        }
+    }
 
 }

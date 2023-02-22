@@ -15,9 +15,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Call
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -30,14 +30,7 @@ fun CallButton(contact: Contact, context: Context, modifier: Modifier = Modifier
         onClick = {
             val callIntent = Intent(Intent.ACTION_CALL)
             callIntent.data = Uri.parse("tel:" + contact.number)
-            if (ContextCompat.checkSelfPermission(
-                    activity, android.Manifest.permission.CALL_PHONE
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                ActivityCompat.requestPermissions(
-                    activity, arrayOf(android.Manifest.permission.CALL_PHONE), 0
-                )
-            } else if (ContextCompat.checkSelfPermission(
+             if (ContextCompat.checkSelfPermission(
                     activity, android.Manifest.permission.CALL_PHONE
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
@@ -51,7 +44,7 @@ fun CallButton(contact: Contact, context: Context, modifier: Modifier = Modifier
         },
         modifier
             .padding(horizontal = 8.dp)
-            .background(Color.Gray, RoundedCornerShape(16.dp))
+            .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(16.dp))
             .height(height = 80.dp)
     ) {
         Icon(Icons.Rounded.Call, modifier = Modifier.size(40.dp), contentDescription = "Call")
